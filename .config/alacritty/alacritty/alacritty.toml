@@ -1,0 +1,17 @@
+[font]
+size = 16
+
+[font.normal]
+family = "JetBrains Mono"
+style = "Bold"
+
+[terminal.shell]
+program = "/usr/bin/zsh"
+args = ["-c", "tmux new-session -A -s default"]
+
+
+[window]
+opacity = 0.92
+startup_mode = "Fullscreen"
+
+[terminal]
