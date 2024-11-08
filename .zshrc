@@ -1,11 +1,36 @@
+# Carrega o Powerlevel10k instant prompt se disponível
 if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
+# Caminho para Oh My Zsh e tema
 export ZSH="$HOME/.oh-my-zsh"
 ZSH_THEME="powerlevel10k/powerlevel10k"
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
+# Função para clonar plugin se não estiver instalado
+clone_plugin() {
+  local repo=$1
+  local dir="$HOME/.oh-my-zsh/custom/plugins/$(basename $repo)"
+  [[ -d $dir ]] || git clone https://github.com/$repo $dir
+}
+
+# Clonar plugins se necessário
+clone_plugin "zsh-users/zsh-autosuggestions"
+clone_plugin "zsh-users/zsh-syntax-highlighting"
+clone_plugin "zsh-users/zsh-completions"
+clone_plugin "Aloxaf/fzf-tab"
+clone_plugin "changyuheng/zsh-interactive-cd"
+clone_plugin "paulirish/git-open"
+clone_plugin "zsh-users/zsh-history-substring-search"
+clone_plugin "jeffreytse/zsh-vi-mode"
+clone_plugin "lukechilds/zsh-nvm"
+clone_plugin "djui/alias-tips"
+clone_plugin "ael-code/zsh-colored-man-pages"
+clone_plugin "Tarrasch/zsh-command-not-found"
+clone_plugin "agkozak/zsh-z"
+
+# Lista de plugins
 plugins=(
   git
   z                    # Navegação inteligente por diretórios
@@ -13,8 +38,6 @@ plugins=(
   zsh-syntax-highlighting # Realce de sintaxe
   colored-man-pages    # Páginas do manual coloridas
   command-not-found    # Sugere instalação de comandos ausentes
-  docker               # Alias e funções para Docker
-  kubectl              # Alias e funções para Kubernetes
   zsh-completions      # Autocompletes adicionais
   fzf-tab              # Navegação de autocomplete com fzf
   zsh-interactive-cd   # Navegação interativa com cd
@@ -27,9 +50,11 @@ plugins=(
 
 source $ZSH/oh-my-zsh.sh
 
+# Configurações adicionais do Zsh
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=8"
 source ${(q-)ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
+# Aliases úteis
 alias ll="ls -la"
 alias ..="cd .."
 alias ...="cd ../.."
